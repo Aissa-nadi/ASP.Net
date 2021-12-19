@@ -1,0 +1,34 @@
+﻿@model ArticleEtSousCategorieViewModel
+@{
+    ViewData["Title"] = "Delete";
+}
+
+
+<br />
+
+<h2 class="text-info">Suppression Article</h2>
+<br />
+<form asp-action="Delete" method="post">
+    <div class="whiteBg">
+        @Html.HiddenFor(m => Model.Article.Id)
+        <div class="form-group row">
+            <div class="col-2">
+                <label asp-for="Article.Name" class="col-form-label"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Article.Name" readonly class="form-control" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-5 offset-2">
+                <partial name="_SupprEtRetourpartial" />
+
+            </div>
+        </div>
+    </div>
+
+</form>
+
+
+
+

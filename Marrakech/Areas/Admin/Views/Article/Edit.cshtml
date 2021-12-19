@@ -1,0 +1,93 @@
+﻿@model ArticleEtSousCategorieViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+
+<br />
+
+<h2 class="text-info">Edit Article</h2>
+<br />
+<div class="whiteBg row">
+    <div class="col-8 border-right">
+        <form asp-action="Edit" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group row">
+                <div class="col-2">
+                    <label asp-for="Article.SousCategorieId" class="col-form-label"></label>
+                </div>
+                <div class="col-5">
+                    <select class="form-control" id="ddlCategories"
+                            asp-for="Article.SousCategorieId"
+                            asp-items="@(new SelectList(Model.SousCategoriesList,"Id","Name"))">
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-2">
+                    <label asp-for="Article.Name" class="col-form-label"></label>
+                </div>
+                <div class="col-5">
+                    <input asp-for="Article.Name" class="form-control" />
+                    <span class="text-danger" asp-validation-for="Article.Name" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-2">
+                    <label asp-for="Article.prix" class="col-form-label"></label>
+                </div>
+                <div class="col-5">
+                    <input asp-for="Article.prix" class="form-control" />
+                    <span class="text-danger" asp-validation-for="Article.prix" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-5 offset-2">
+                    <partial name="_ModifEtRetourpartial" />
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-3 offset-1">
+        @if (Model.ArticlesList.Count() > 0)
+        {
+            <p>Article Existantes :</p>
+            <div id="divSousCategorieList">
+
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        /* function updateSousCategoriesList() {
+            var selectedCategorie = document.getElementById("ddlCategories").value;
+            $list = $('#divSousCategorieList');
+            $.ajax({
+                url: '/Admin/SousCategorie/GetSousCategories/' + selectedCategorie,
+                type: 'GET',
+                dataType: 'text',
+                success: function (data) {
+                    resultats = JSON.parse(data);
+                    $list.html('');
+                    $list.append('<ul class="list-group">');
+                    for (i in resultats) {
+                        $list.append('<li>' + resultats[i].text + '</li>');
+                    }
+                    $list.append('</ul>');
+                }
+            });
+        }
+        $(document).ready(function () {
+            updateSousCategoriesList();
+        });
+        $("#ddlCategories").on("change", function () {
+            updateSousCategoriesList();
+        });*/
+    </script>
+
+}
+

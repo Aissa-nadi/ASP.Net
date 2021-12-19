@@ -1,0 +1,84 @@
+﻿@model SousCategorieEtCategorieViewModel
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+<br />
+
+<h2 class="text-info">Ajout Catégorie</h2>
+<br />
+<partial name="_StatusMessage" model="Model.StatusMessage"/>
+<div class="whiteBg row">
+    <div class="col-8 border-right">
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group row">
+                <div class="col-2">
+                    <label asp-for="SousCategorie.CategorieId" class="col-form-label"></label>
+                </div>
+                <div class="col-5">
+                    <select class="form-control" id="ddlCategories"
+                            asp-for="SousCategorie.CategorieId"
+                            asp-items="@(new SelectList(Model.CategorieList,"Id","Name"))">
+                    </select>
+                </div>
+            </div>
+            
+            <div class="form-group row">
+                <div class="col-2">
+                    <label asp-for="SousCategorie.Name" class="col-form-label"></label>
+                </div>
+                <div class="col-5">
+                    <input asp-for="SousCategorie.Name" class="form-control" />
+                    <span class="text-danger" asp-validation-for="SousCategorie.Name" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-5 offset-2">
+                    <partial name="_AjoutEtRetourpartial" />
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="col-3 offset-1">
+        @if (Model.SousCategoriesList.Count() > 0)
+        {
+            <p>Sous Catégories Existantes :</p>
+            <div id="divSousCategorieList">
+
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        function updateSousCategoriesList() {
+            var selectedCategorie = document.getElementById("ddlCategories").value;
+            $list = $('#divSousCategorieList');
+            $.ajax({
+                url: '/Admin/SousCategorie/GetSousCategories/' + selectedCategorie,
+                type: 'GET',
+                dataType: 'text',
+                success: function (data) {
+                    resultats = JSON.parse(data);
+                    $list.html('');
+                    $list.append('<ul class="list-group">');
+                    for (i in resultats) {
+                        $list.append('<li>' + resultats[i].text + '</li>');
+                    }
+                    $list.append('</ul>');
+                }
+            });
+        }
+        $(document).ready(function () {
+            updateSousCategoriesList();
+        });
+        $("#ddlCategories").on("change", function () {
+            updateSousCategoriesList();
+        });
+    </script>
+
+}
+
